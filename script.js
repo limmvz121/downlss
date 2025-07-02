@@ -3,8 +3,8 @@ document.querySelectorAll('.download-btn').forEach(button => {
         e.preventDefault();
 
         const fileName = this.closest('.file-card').querySelector('.file-name').textContent;
-        const originalText = this.textContent;
         const fileURL = this.getAttribute('href');
+        const originalText = this.textContent;
 
         this.textContent = 'Mempersiapkan download...';
         this.style.opacity = '0.7';
@@ -13,8 +13,13 @@ document.querySelectorAll('.download-btn').forEach(button => {
             this.textContent = 'Download dimulai!';
             this.style.background = 'linear-gradient(to right, #4cc9f0, #4895ef)';
 
-            // ✅ Jalankan download sebenarnya
-            window.location.href = fileURL;
+            // ✅ Buka file dengan cara paksa download
+            const a = document.createElement('a');
+            a.href = fileURL;
+            a.download = '';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
 
             setTimeout(() => {
                 this.textContent = originalText;
